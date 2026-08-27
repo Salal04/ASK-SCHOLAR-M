@@ -1,0 +1,98 @@
+// Ask Scholar - Prisma Schema
+// Database: PostgreSQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------------------------------
+// ENUMS
+// ------------------------------------------------------
+
+enum Fiqah {
+  HANAFI
+  SHAFI
+  MALIKI
+  HANBALI
+  JAFARI
+  Indipendent
+  OTHER
+}
+
+enum ScholarStatus {
+  PENDING // invited by admin, has not created account/password yet
+  ACTIVE // account fully created and usable
+  SUSPENDED // disabled by admin, cannot log in
+}
+
+// ------------------------------------------------------
+// MODELS
+// ------------------------------------------------------
+
+// Single Admin (or multiple, if ever needed) account.
+// One admin account is auto-seeded on first server start.
+model Admin {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
+
+// Regular end-users of the app who browse/search scholars.
+// Kept intentionally simple.
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+// Scholar accounts. Can be created two ways by admin:
+//  1) Fully created by admin (name + email + password set immediately) -> status ACTIVE
+//  2) Just invited by email (admin supplies email only) -> status PENDING,
+//     an inviteToken is issued, and the scholar later completes registration
+//     (sets their own password/profile) which flips status to ACTIVE.
+model Scholar {
+  id     String  @id @default(uuid())
+  name   String?
+  email  String  @unique
+  password String? // nullable until scholar completes self-registration
+
+  fiqah          Fiqah?
+  picture        String? // URL / path to uploaded profile picture
+  bio            String? @db.Text
+  specialization String? // e.g. "Fiqh al-Muamalat", "Hadith Sciences"
+  qualifications String? @db.Text // degrees, ijazahs, institutions
+  yearsOfExperience Int?
+  languages      String[] @default([]) // e.g. ["Arabic", "English", "Urdu"]
+  location       String? // city/country
+  isVerified     Boolean @default(false) // admin-verified badge
+  popularityScore  Int @default(0)
+  status            ScholarStatus @default(PENDING)
+  inviteToken       String?       @unique
+  inviteTokenExpiry DateTime?
+
+  createdByAdminId String? // which admin created/invited this scholar
+  isActive          Boolean @default(true) // soft toggle, separate from status
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("scholars")
+  @@index([fiqah])
+  @@index([status])
+}
