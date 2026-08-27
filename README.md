@@ -29,9 +29,6 @@ answer already exists, instead of a generic AI-generated response.
 > author a religious answer on a scholar's behalf — the AI only retrieves
 > and points to what the scholar themselves has already said. do not belive untill
 > you checked the citations and complete video to know whole context.
-
-**🌐 Try it live:** **[ask-scholar-frontend.vercel.app](https://ask-scholar-frontend.vercel.app/)**
-
 ---
 
 ## ✨ Features
