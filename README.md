@@ -7,17 +7,11 @@
 ### 🔗 [**Live App → ask-scholars.vercel.app/**](https://ask-scholars.vercel.app/)
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://ask-scholar-frontend.vercel.app/)
-
 [![React](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?style=for-the-badge&logo=react&logoColor=black)](#-frontend)
-
 [![Node.js](https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](#-backend)
-
 [![FastAPI](https://img.shields.io/badge/AI%20Backend-FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](#-backend)
-
 [![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
-
 [![Gemini](https://img.shields.io/badge/AI-Gemini%20%2B%20Pinecone%20RAG-4285F4?style=for-the-badge&logo=googlegemini&logoColor=white)](#-rag-pipeline)
-
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](#-license)
 
 </div>
