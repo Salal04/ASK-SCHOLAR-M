@@ -257,7 +257,7 @@ Until then, treat `app/models.py` as the single source of truth for the schema �
 
 ---
 
-## 📡 API Reference
+## 📡 API Reference - NodeJS
 
 Base path for everything below: `/api`
 
@@ -293,7 +293,7 @@ Base path for everything below: `/api`
 | `GET` | `/admin/users` | List all users |
 | `DELETE` | `/admin/users/{id}` | Delete a user |
 
-### 🧠 RAG — `/rag`
+### 🧠 RAG — `/rag` - FASTAPI
 
 | Method | Endpoint | Description | Auth |
 |---|---|---|---|
