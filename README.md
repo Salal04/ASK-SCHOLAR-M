@@ -92,60 +92,29 @@ Pinecone keys, it just no-ops those features.
 
 | Layer | Technology |
 |---|---|
-| Framework | [FastAPI](https://fastapi.tiangolo.com/) + [Uvicorn](https://www.uvicorn.org/) |
+| Framework |[Mern Stack] + [FastAPI](https://fastapi.tiangolo.com/) for rag + [Uvicorn](https://www.uvicorn.org/) |
 | Database | [Supabase](https://supabase.com/) (PostgreSQL) via async [SQLAlchemy 2.0](https://www.sqlalchemy.org/) + `asyncpg` |
-| Auth | `PyJWT` + `passlib[bcrypt]` |
-| Validation | `Pydantic v2` / `pydantic-settings` |
-| File Storage | Supabase Storage (scholar profile pictures) |
+| Auth | `JWT` + `[bcrypt]` |
+| File Storage | PostgreSQL + Supabase Storage (scholar profile pictures) |
 | LLM / Embeddings | Google **Gemini** (`google-genai`) |
 | Vector DB | **Pinecone** |
 | Video/Doc ingestion | `yt-dlp`, `pdfplumber`, `python-docx` |
 
-### Project Structure
-
-```
-app/
-├── main.py                FastAPI app, CORS, error envelope, startup (create tables + seed admin)
-├── config.py               Core settings loaded from .env (pydantic-settings)
-├── database.py              Async SQLAlchemy engine/session (asyncpg, Supabase-pooler friendly)
-├── models.py                 Admin, User, Scholar, Video (SQLAlchemy ORM)
-├── schemas.py                Pydantic request/response models (camelCase, matches frontend)
-├── serializers.py             ORM → Pydantic conversion helpers
-├── security.py                 bcrypt hashing + JWT create/decode
-├── deps.py                      get_current_user / get_current_admin auth dependencies
-├── storage.py                    Uploads scholar pictures to Supabase Storage
-├── seed.py                        Auto-seeds the admin account on startup
-│
-├── routers/
-│   ├── auth.py             POST /auth/user/register, /auth/user/login, /auth/admin/login
-│   ├── scholars.py          GET /scholars, GET /scholars/{id}, POST /scholars/askQuestion/{id}
-│   └── admin.py               Scholar CRUD/invite, video linking, user management (admin-only)
-│
-└── rag/                     RAG subsystem
-    ├── config.py               Env vars, Gemini model fallback chains, chunking/Pinecone settings
-    ├── gemini_manager.py        GeminiKeyManager — key pool + per-task model fallback
-    ├── schemas.py                 Pydantic models for /api/rag/*
-    ├── router.py                   POST /rag/ingest/youtube, /ingest/document/*, /search
-    └── services/
-        ├── youtube_service.py       Download audio → Gemini transcript → cleanup
-        ├── docs_service.py           Fetch/extract document text → cleanup
-        ├── chunking.py                 Plain-text + timestamped-transcript chunking
-        ├── embedding_service.py         Gemini embeddings + Pinecone upsert/query
-        ├── answer_service.py             Builds the grounded askQuestion answer
-        ├── ingest_state.py                 Checkpointing for resumable ingestion
-        └── translation.py                   Answer translation
-```
 
 ---
 
 ## 🚀 Running the Backend Locally
 
 ### Prerequisites
-
+- **NodeJS+ ExpressJS**
 - **Python 3.11+**
 - A **Supabase** project (free tier is fine)
 - `ffmpeg` installed system-wide *(only needed if you enable RAG video ingestion)*
 - **Gemini API key(s)** and a **Pinecone** account *(only needed for RAG)*
+
+### 1️⃣ Set Node backend
+- run npm install
+- run prisma migrations
 
 ### 1️⃣ Set up a virtual environment
 
