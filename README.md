@@ -209,10 +209,15 @@ brew install ffmpeg
 Then fill in `GEMINI_API_KEY_1/2/3` and `PINECONE_API_KEY` / `PINECONE_INDEX_NAME` in `.env`.
 The Pinecone index is **auto-created** on first use if it doesn't already exist.
 
-### 5️⃣ Run the server
+### 5️⃣ Run the server - RAG
 
 ```bash
 uvicorn app.main:app --host 0.0.0.0 --port 5000 --reload
+```
+### 5️⃣ Run the server - Node
+
+```bash
+npm run dev
 ```
 
 On first startup the app will:
